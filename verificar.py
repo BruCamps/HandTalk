@@ -5,11 +5,10 @@ def Nome():
         nome = input("Informe o nome: ").strip()
         if not nome:
             print("\033[31mCampo obrigatório!\033[0;0m")
-
-        for i in nome:
-            if i.isdigit() or i in '!@#$% ̈&*()_+-=,./?`~':
-                print("\033[31mDigite um nome válido.\033[0;0m")
-                break
+        elif any(i.isdigit() for i in nome):
+            print("\033[31mDigite um nome válido.\033[0;0m")
+        elif any(i in '!@#$% ̈&*()_+-=,./?`~' for i in nome):
+            print("\033[31mDigite um nome válido.\033[0;0m")
         else:
             return nome.strip()
 
@@ -33,7 +32,7 @@ def ConfirmaSenha(senha):
         if not confirmaSenha:
             print("\033[31mCampo obrigatório!\033[0;0m")
         elif confirmaSenha != senha:
-            print("\033[31mAs senhas são diferentes!\033[0;0m", senha, confirmaSenha)
+            print("\033[31mAs senhas são diferentes!\033[0;0m")
         else:
             return confirmaSenha.strip()
 
