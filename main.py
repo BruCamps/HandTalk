@@ -13,6 +13,15 @@ while True:
     # Leva o usuário para o login
     elif escolha == '2':
         defs.login()
+    # Leva o usuário para o QUIZ
+    elif escolha == '3':
+        defs.run_quiz()
+    elif escolha == '4':  
+    # Leva o usuário para atualizar informações
+        defs.alterar_usuario()
+    elif escolha == '5': 
+    # Leva o usuário para excluir cadastro
+        defs.excluir_usuario()
     # Finaliza o programa
     elif escolha == '0':
         print('\033[36mSaindo...\033[0;0m')

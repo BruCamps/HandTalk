@@ -51,16 +51,19 @@ def ConfirmaSenha(senha):
 
 def Email():
     while True:
-        # Entrada do email e remoção de espacos
-        email = input("Informe o email: ").strip()
-        # Verifica se o campo está vazio
+        # Entrada do email: converte para minúsculo e remove espaços
+        email = input("Informe o email: ").strip().lower()
         if not email:
             print("\033[31mCampo obrigatório!\033[0;0m")
-        # Verifica se o email é do domínio @ufrpe.br
-        elif '@ufrpe.br' in email:
-            return email.strip()
+            continue
+        # Verifica se o email contém o domínio correto (já em minúsculo)
+        if '@ufrpe.br' in email:
+            if not email.startswith('@ufrpe.br'):
+                return email  # Retorna o email em minúsculo
+            else:
+                print("\033[31mEmail inválido. Deve conter algo antes de '@ufrpe.br'.\033[0;0m")
         else:
-            print("\033[31mEmail inválido.Deve conter '@ufrpe.br'.\033[0;0m")
+            print("\033[31mEmail inválido. Deve conter '@ufrpe.br'.\033[0;0m")
 
 def Usuario():
     while True:
