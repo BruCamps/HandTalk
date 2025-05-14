@@ -54,9 +54,43 @@ def login():
     if not encontrado:
         print("\033[31mUsuário ou email não encontrados!\033[0;0m")
     return None
-
 def alterar_usuario():
     email_procura = input("Informe o email do usuário que deseja alterar: ").strip().lower()
+
+    with open("usuarios.txt", "r") as arquivo:
+        linhas = arquivo.readlines()
+
+    registro_encontrado = False
+    registros_atualizados = []
+
+    for linha in linhas:
+        usuario, email, senha = linha.strip().split(",")
+
+        if email.strip().lower() == email_procura:
+            registro_encontrado = True
+            senha_atual = input("Confirme sua senha atual: ").strip()
+
+            if senha_atual != senha:
+                print("\033[31mSenha incorreta. Cancelando alteração.\033[0;0m")
+                registros_atualizados.append(linha)
+                continue
+
+            # **Chamando a função para atualizar os dados**
+            novo_usuario, novo_email, nova_senha = atualizar_dados(usuario, email, senha)
+
+            registros_atualizados.append(f"{novo_usuario},{novo_email},{nova_senha}\n")
+        else:
+            registros_atualizados.append(linha)
+
+    if registro_encontrado:
+        with open("usuarios.txt", "w") as arquivo:
+            arquivo.writelines(registros_atualizados)
+        print("\033[32mInformações atualizadas com sucesso!\033[0;0m")
+    else:
+        print("\033[31mRegistro não encontrado!\033[0;0m")
+def alterar_usuario():
+    email_procura = input("Informe o email do usuário que deseja alterar: ").strip().lower()
+
     with open("usuarios.txt", "r") as arquivo:
         linhas = arquivo.readlines()
 
@@ -73,16 +107,8 @@ def alterar_usuario():
                 registros_atualizados.append(linha)
                 continue
 
-            print("Registro encontrado! Insira os novos dados (ou deixe em branco para manter o atual).")
-            novo_usuario = input(f"Novo nome de usuário (atual: {usuario}): ").strip()
-            novo_email = input(f"Novo email (atual: {email}): ").strip().lower()
-            nova_senha = input(f"Nova senha (atual: {senha}): ").strip()
-
-            usuario = novo_usuario if novo_usuario else usuario
-            email = novo_email if novo_email else email
-            senha = nova_senha if nova_senha else senha
-
-            registros_atualizados.append(f"{usuario},{email},{senha}\n")
+            novo_usuario, novo_email, nova_senha = atualizar_dados(usuario, email, senha)
+            registros_atualizados.append(f"{novo_usuario},{novo_email},{nova_senha}\n")
         else:
             registros_atualizados.append(linha)
 
@@ -92,6 +118,49 @@ def alterar_usuario():
         print("\033[32mInformações atualizadas com sucesso!\033[0;0m")
     else:
         print("\033[31mRegistro não encontrado!\033[0;0m")
+
+
+def atualizar_dados(usuario_atual, email_atual, senha_atual):
+    print("Registro encontrado! Insira os novos dados (ou deixe em branco para manter o atual).")
+
+    # Atualiza o nome de usuário:
+    novo_usuario = input(f"Novo nome de usuário (atual: {usuario_atual}): ").strip()
+    if not novo_usuario:
+        novo_usuario = usuario_atual
+
+    # Atualiza o email:
+    email_input = input(f"Novo email (atual: {email_atual}): ").strip().lower()
+    if email_input:
+        while True:
+            if '@ufrpe.br' not in email_input:
+                print("\033[31mEmail inválido. Deve conter '@ufrpe.br'.\033[0;0m")
+            elif email_input.startswith('@ufrpe.br'):
+                print("\033[31mEmail inválido. Deve conter algo antes de '@ufrpe.br'.\033[0;0m")
+            else:
+                novo_email = email_input
+                break
+            email_input = input("Novo email (tente novamente): ").strip().lower()
+    else:
+        novo_email = email_atual
+
+    # Atualiza a senha:
+    senha_input = input(f"Nova senha (atual: {senha_atual}): ").strip()
+    if senha_input:
+        while True:
+            if len(senha_input) < 6:
+                print("\033[31mA senha deve ter no mínimo 6 caracteres!\033[0;0m")
+            elif not any(i.isupper() for i in senha_input):
+                print("\033[31mA senha deve conter pelo menos uma letra maiúscula!\033[0;0m")
+            elif not any(i in '!@#$%¨&*()_+-=,./?`~' for i in senha_input):
+                print("\033[31mDeve conter um caractere especial!\033[0;0m")
+            else:
+                nova_senha = senha_input
+                break
+            senha_input = input("Nova senha (tente novamente): ").strip()
+    else:
+        nova_senha = senha_atual
+
+    return novo_usuario, novo_email, nova_senha
 
 def excluir_usuario():
     email_procura = input("Informe o email do usuário que deseja excluir: ").strip().lower()
