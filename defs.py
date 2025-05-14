@@ -2,7 +2,6 @@ import os
 import verificar
 
 def limpaTerminal():
-    # Limpa o terminal
     return os.system('cls' if os.name == 'nt' else 'clear')
 
 def criaBarra():
@@ -16,50 +15,36 @@ def menu():
     print("|" + " " * 2 + "\033[36m4\033[0;0m Atualizar Dados"  + " " * 11 + "|")
     print("|" + " " * 2 + "\033[36m5\033[0;0m Excluir Dados"  + " " * 13 + "|")
     print("|" + " " * 2 + "\033[36m0\033[0;0m Sair"   + " " * 22 + "|")
-    # Cria uma barra de divisão
     criaBarra()
-    # Escolha da opção
     opcao = input("\033[36mEscolha uma opção: \033[0;0m")
     return opcao
 
 def cadastro():
-    # Limpa o terminal
     limpaTerminal()
     print("\033[36mCadastrar\033[0;0m")
-    # Verifica o campo Nome
     nome = verificar.Nome()
-    # Verifica o campo Usuário
     usuario = verificar.Usuario()
-    # Verifica o campo Email
     email = verificar.Email()
-    # Verifica o campo Senha
     senha = verificar.Senha()
-    # Verifica se as senhas conferem
     confirmaSenha = verificar.ConfirmaSenha(senha)
-# Salva os dados no arquivo txt
     with open("usuarios.txt", "a") as arquivo:
         arquivo.write(f"{usuario},{email},{senha}\n")
     limpaTerminal()
-    # Cria uma barra de divisão
     criaBarra()
     print("\033[36mCadastro realizado com sucesso!\033[0;0m")
-    # Cria uma barra de divisão
     criaBarra()
 
 def login():
-    # Limpa o terminal
     limpaTerminal()
     print("\033[36mLogin\033[0;0m")
-    # Solicita email ou usuário
     usuario_email = input("Informe seu usuário ou email: ").strip()
     senha = input("Informe sua senha: ").strip()
-    encontrado = False  # Variável para rastrear se o usuário/email foi encontrado
-    # Verifica se o usuário ou email estão cadastrados
+    encontrado = False
     with open("usuarios.txt", "r") as arquivo:
         for linha in arquivo:
             usuario, email, senha_cadastrada = linha.strip().split(",")
             if usuario_email == usuario or usuario_email == email:
-                encontrado = True  # Identifica que o usuário/email existe
+                encontrado = True
                 if senha == senha_cadastrada:
                     print("\033[32mLogin realizado com sucesso!\033[0;0m")
                     return usuario_email
@@ -68,13 +53,7 @@ def login():
                     return None
     if not encontrado:
         print("\033[31mUsuário ou email não encontrados!\033[0;0m")
-    return None  # Garante que a função sempre retorna um valor
-    limpaTerminal()
-    # Cria uma barra de divisão
-    criaBarra()
-    print("\033[36mLogin realizado com sucesso!\033[0;0m")
-    # Cria uma barra de divisão
-    criaBarra()
+    return None
 
 def alterar_usuario():
     email_procura = input("Informe o email do usuário que deseja alterar: ").strip().lower()
@@ -114,7 +93,6 @@ def alterar_usuario():
     else:
         print("\033[31mRegistro não encontrado!\033[0;0m")
 
-
 def excluir_usuario():
     email_procura = input("Informe o email do usuário que deseja excluir: ").strip().lower()
     with open("usuarios.txt", "r") as arquivo:
@@ -145,15 +123,11 @@ def excluir_usuario():
         print("\033[31mRegistro não encontrado!\033[0;0m")
 
 def print_option_box(letter, text, width=50):
-    """
-    Exibe uma alternativa em uma "caixa" com borda.
-    """
     content = f"{letter}. {text}"
     border = "+" + "-" * (width - 2) + "+"
     print(border)
     print("|" + content.ljust(width - 2) + "|")
     print(border)
-
 def run_quiz():
     VIDEO_LINK = "https://youtu.be/UHi8K8XjjNY?si=xVeMwD5YhUP3Docl"
 
@@ -166,7 +140,7 @@ def run_quiz():
     print(VIDEO_LINK)
     print("Caso o link não seja clicável, copie e cole-o na barra de endereço do seu navegador.")
     print("Responda as questões e teste seu conhecimento.\n")
-    # Definindo as perguntas, opções e respostas corretas
+
     questions = [
         {
             "question": "O que são algoritmos??",
@@ -199,53 +173,56 @@ def run_quiz():
             "correct": "C"
         }
     ]
-    max_attempts = 3  # Tentativas máximas por questão
-    score = 0        # Número de respostas corretas
+
+    max_attempts = 3
+    score = 0
     current_question_index = 0
-    quit_quiz = False  # Flag para controle de saída antecipada do quiz
-    # Loop principal do quiz
+    quit_quiz = False
+
     while current_question_index < len(questions):
         question = questions[current_question_index]
         attempts = 0
-        # Flag para controle de voltar à pergunta anterior
         went_back = False
+
         while attempts < max_attempts:
             print("\n------------------------------------------")
             print(f"Pergunta {current_question_index + 1}: {question['question']}\n")
-            # Exibe as alternativas dentro de caixas
+
             for letter, option_text in question["options"].items():
                 print_option_box(letter, option_text)
+
             print("\nResponda com A, B, C ou D.")
             if current_question_index > 0:
                 print("Digite 'v' para voltar à pergunta anterior.")
             print("Digite 'p' para pular essa pergunta.")
             print("Digite 'q' para sair do quiz e voltar ao menu.")
+
             response = input("Sua resposta: ").strip().upper()
-            # Opção para sair do quiz
+
             if response == "Q":
                 print("Saindo do quiz e voltando ao menu...")
                 quit_quiz = True
-                break  # Sai do loop de tentativas da questão
-            # Opção para voltar à pergunta anterior (se possível)
+                break
+
             if response == "V":
                 if current_question_index > 0:
                     current_question_index -= 1
                     went_back = True
                     print("Voltando para a pergunta anterior...")
-                    break  # Para sair do loop desta questão
+                    break
                 else:
                     print("Você está na primeira pergunta, não é possível voltar.")
-                    continue  # Repete a pergunta
-            # Opção para pular a pergunta
+                    continue
+
             if response == "P":
                 print("Você optou por pular esta pergunta.")
-                break  # Passa para a próxima questão
-            # Se a resposta for uma das opções válidas
+                break
+
             if response in ['A', 'B', 'C', 'D']:
                 if response == question["correct"]:
                     print("Resposta correta!")
                     score += 1
-                    break  # Resposta correta, passa para a próxima questão
+                    break
                 else:
                     attempts += 1
                     if attempts < max_attempts:
@@ -254,15 +231,18 @@ def run_quiz():
                         print("Você atingiu o número máximo de tentativas para esta pergunta.")
             else:
                 print("Opção inválida. Digite A, B, C ou D, 'v' para voltar, 'p' para pular ou 'q' para sair.")
-        if quit_quiz:  # Se o usuário optou por sair do quiz
+
+        if quit_quiz:
             break
-        # Se voltou à pergunta anterior, não avança para a próxima pergunta
+
         if not went_back:
             current_question_index += 1
+
     print("\n==========================================")
     if quit_quiz:
         print("Quiz interrompido pelo usuário.")
     else:
         print("Fim do Quiz!")
+
     print(f"Total de acertos: {score} de {current_question_index} pergunta(s) concluída(s).")
     input("Pressione Enter para voltar ao menu...")
