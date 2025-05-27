@@ -1,12 +1,15 @@
 import os
 import verificar
 
+# Função para limpar o terminal
 def limpaTerminal():
     return os.system('cls' if os.name == 'nt' else 'clear')
 
+# Função para criar uma barra (visual)
 def criaBarra():
     print(f"\033[36m{'-' * 40}\033[0;0m")
 
+# Função para exibir o menu principal
 def menu():
     print(f"\n{'-' * 7} <<< \033[36mHandTalk\033[0;0m >>> {'-' * 7}")
     print("|" + " " * 2 + "\033[36m1\033[0;0m Cadastro" + " " * 18 + "|")
@@ -19,6 +22,7 @@ def menu():
     opcao = input("\033[36mEscolha uma opção: \033[0;0m")
     return opcao
 
+# Função para cadastrar um novo usuário
 def cadastro():
     limpaTerminal()
     print("\033[36mCadastrar\033[0;0m")
@@ -34,170 +38,138 @@ def cadastro():
     print("\033[36mCadastro realizado com sucesso!\033[0;0m")
     criaBarra()
 
+# Função para efetuar o login
 def login():
     limpaTerminal()
     print("\033[36mLogin\033[0;0m")
-    usuario_email = input("Informe seu usuário ou email: ").strip()
-    senha = input("Informe sua senha: ").strip()
-    encontrado = False
+    usuario_email = verificar.Email()
+    usuario_senha = verificar.Senha()
+
+    # Verifica se o email e a senha existem no arquivo
     with open("usuarios.txt", "r") as arquivo:
         for linha in arquivo:
             usuario, email, senha_cadastrada = linha.strip().split(",")
-            if usuario_email == usuario or usuario_email == email:
-                encontrado = True
-                if senha == senha_cadastrada:
-                    print("\033[32mLogin realizado com sucesso!\033[0;0m")
-                    return usuario_email
-                else:
-                    print("\033[31mSenha incorreta!\033[0;0m")
-                    return None
-    if not encontrado:
-        print("\033[31mUsuário ou email não encontrados!\033[0;0m")
+            if usuario_email in (usuario, email) and usuario_senha == senha_cadastrada:
+                print("\033[32mLogin realizado com sucesso!\033[0;0m")
+                return usuario_email
+
+    print("\033[31mUsuário ou email não encontrados!\033[0;0m")
     return None
+
+# Função para alterar os dados de um usuário
 def alterar_usuario():
+    # Recebe o email do usuário que deseja alterar
     email_procura = input("Informe o email do usuário que deseja alterar: ").strip().lower()
 
+    # Verifica se o email existe no arquivo
     with open("usuarios.txt", "r") as arquivo:
         linhas = arquivo.readlines()
 
     registro_encontrado = False
     registros_atualizados = []
 
+    # Percorre as linhas do arquivo
     for linha in linhas:
         usuario, email, senha = linha.strip().split(",")
 
+        # Verifica se o email do usuário correspondente ao email procurado
         if email.strip().lower() == email_procura:
             registro_encontrado = True
             senha_atual = input("Confirme sua senha atual: ").strip()
 
+            # Verifica se as senhas conferem para permitir a alteração
             if senha_atual != senha:
                 print("\033[31mSenha incorreta. Cancelando alteração.\033[0;0m")
                 registros_atualizados.append(linha)
-                continue
 
-            # **Chamando a função para atualizar os dados**
+            # Chama a função para atualizar os dados
             novo_usuario, novo_email, nova_senha = atualizar_dados(usuario, email, senha)
 
+            # Adiciona as informações atualizadas ao arquivo
             registros_atualizados.append(f"{novo_usuario},{novo_email},{nova_senha}\n")
-        else:
-            registros_atualizados.append(linha)
 
+        # Adiciona as linhas que não foram modificadas ao arquivo 
+        registros_atualizados.append(linha)
+
+    # Atualiza o arquivo
     if registro_encontrado:
         with open("usuarios.txt", "w") as arquivo:
             arquivo.writelines(registros_atualizados)
         print("\033[32mInformações atualizadas com sucesso!\033[0;0m")
-    else:
-        print("\033[31mRegistro não encontrado!\033[0;0m")
-def alterar_usuario():
-    email_procura = input("Informe o email do usuário que deseja alterar: ").strip().lower()
+    # Mensagem para informar que o registro não foi encontrado
+    print("\033[31mRegistro não encontrado!\033[0;0m")
 
-    with open("usuarios.txt", "r") as arquivo:
-        linhas = arquivo.readlines()
-
-    registro_encontrado = False
-    registros_atualizados = []
-
-    for linha in linhas:
-        usuario, email, senha = linha.strip().split(",")
-        if email.strip().lower() == email_procura:
-            registro_encontrado = True
-            senha_atual = input("Confirme sua senha atual: ").strip()
-            if senha_atual != senha:
-                print("\033[31mSenha incorreta. Cancelando alteração.\033[0;0m")
-                registros_atualizados.append(linha)
-                continue
-
-            novo_usuario, novo_email, nova_senha = atualizar_dados(usuario, email, senha)
-            registros_atualizados.append(f"{novo_usuario},{novo_email},{nova_senha}\n")
-        else:
-            registros_atualizados.append(linha)
-
-    if registro_encontrado:
-        with open("usuarios.txt", "w") as arquivo:
-            arquivo.writelines(registros_atualizados)
-        print("\033[32mInformações atualizadas com sucesso!\033[0;0m")
-    else:
-        print("\033[31mRegistro não encontrado!\033[0;0m")
-
-
+# Função para atualizar os dados de um usuário
 def atualizar_dados(usuario_atual, email_atual, senha_atual):
     print("Registro encontrado! Insira os novos dados (ou deixe em branco para manter o atual).")
 
     # Atualiza o nome de usuário:
-    novo_usuario = input(f"Novo nome de usuário (atual: {usuario_atual}): ").strip()
-    if not novo_usuario:
-        novo_usuario = usuario_atual
+    usuario_input = verificar.NovoUsuario(usuario_atual)
+    novo_usuario = usuario_input
 
     # Atualiza o email:
-    email_input = input(f"Novo email (atual: {email_atual}): ").strip().lower()
-    if email_input:
-        while True:
-            if '@ufrpe.br' not in email_input:
-                print("\033[31mEmail inválido. Deve conter '@ufrpe.br'.\033[0;0m")
-            elif email_input.startswith('@ufrpe.br'):
-                print("\033[31mEmail inválido. Deve conter algo antes de '@ufrpe.br'.\033[0;0m")
-            else:
-                novo_email = email_input
-                break
-            email_input = input("Novo email (tente novamente): ").strip().lower()
-    else:
-        novo_email = email_atual
+    email_input = verificar.NovoEmail(email_atual) 
+    novo_email = email_input
 
     # Atualiza a senha:
-    senha_input = input(f"Nova senha (atual: {senha_atual}): ").strip()
-    if senha_input:
-        while True:
-            if len(senha_input) < 6:
-                print("\033[31mA senha deve ter no mínimo 6 caracteres!\033[0;0m")
-            elif not any(i.isupper() for i in senha_input):
-                print("\033[31mA senha deve conter pelo menos uma letra maiúscula!\033[0;0m")
-            elif not any(i in '!@#$%¨&*()_+-=,./?`~' for i in senha_input):
-                print("\033[31mDeve conter um caractere especial!\033[0;0m")
-            else:
-                nova_senha = senha_input
-                break
-            senha_input = input("Nova senha (tente novamente): ").strip()
-    else:
-        nova_senha = senha_atual
+    senha_input = verificar.NovaSenha(senha_atual)
+    nova_senha = senha_input
 
+    # Retorna os dados atualizados
     return novo_usuario, novo_email, nova_senha
 
+# Função para excluir um usuário
 def excluir_usuario():
+    # Recebe o email do usuário que deseja excluir
     email_procura = input("Informe o email do usuário que deseja excluir: ").strip().lower()
+
+    # Verifica se o email existe no arquivo
     with open("usuarios.txt", "r") as arquivo:
         linhas = arquivo.readlines()
 
     registro_encontrado = False
     registros_atualizados = []
 
+    # Percorre as linhas do arquivo
     for linha in linhas:
         usuario, email, senha = linha.strip().split(",")
+
+        # Verifica se o email do usuário correspondente ao email procurado
         if email.strip().lower() == email_procura:
             registro_encontrado = True
             senha_atual = input("Confirme sua senha atual: ").strip()
+
+            # Verifica se as senhas conferem para permitir a exclusão
             if senha_atual != senha:
                 print("\033[31mSenha incorreta. Cancelando exclusão.\033[0;0m")
                 registros_atualizados.append(linha)
                 continue
 
+            # Mensagem para informar que o usuário foi removido
             print(f"Usuário '{usuario}' removido.")
-        else:
-            registros_atualizados.append(linha)
 
+        # Adiciona as linhas que não foram modificadas ao arquivo
+        registros_atualizados.append(linha)
+
+    # Atualiza o arquivo
     if registro_encontrado:
         with open("usuarios.txt", "w") as arquivo:
             arquivo.writelines(registros_atualizados)
         print("\033[32mRegistro excluído com sucesso!\033[0;0m")
-    else:
-        print("\033[31mRegistro não encontrado!\033[0;0m")
+    # Mensagem para informar que o registro não foi encontrado
+    print("\033[31mRegistro não encontrado!\033[0;0m")
 
-def print_option_box(letter, text, width=50):
-    content = f"{letter}. {text}"
+# Função para exibir uma caixa de opções (visual)
+def print_option_box(index_pergunta, texto_pergunta, width=50):
+    content = f"{index_pergunta}. {texto_pergunta}"
     border = "+" + "-" * (width - 2) + "+"
     print(border)
     print("|" + content.ljust(width - 2) + "|")
     print(border)
+
+# Função para executar o quiz
 def run_quiz():
+    # Link para o vídeo explicativo
     VIDEO_LINK = "https://youtu.be/UHi8K8XjjNY?si=xVeMwD5YhUP3Docl"
 
     print("\n==========================================")
@@ -210,7 +182,8 @@ def run_quiz():
     print("Caso o link não seja clicável, copie e cole-o na barra de endereço do seu navegador.")
     print("Responda as questões e teste seu conhecimento.\n")
 
-    questions = [
+    # Dicionário com as perguntas, opções e respostas corretas
+    perguntas = [
         {
             "question": "O que são algoritmos??",
             "options": {
@@ -243,75 +216,95 @@ def run_quiz():
         }
     ]
 
-    max_attempts = 3
-    score = 0
-    current_question_index = 0
-    quit_quiz = False
+    # Variáveis de controle
+    max_tentativas = 3
+    pontos = 0
+    index_questao_atual = 0
+    sair_quiz = False
 
-    while current_question_index < len(questions):
-        question = questions[current_question_index]
-        attempts = 0
-        went_back = False
+    # Loop principal do quiz
+    while index_questao_atual < len(perguntas):
 
-        while attempts < max_attempts:
+        # Variáveis de controle
+        pergunta = perguntas[index_questao_atual]
+        tentativas = 0
+        voltar_questao = False
+
+        # Loop até atingir o limite de 3 tentativas
+        while tentativas < max_tentativas:
             print("\n------------------------------------------")
-            print(f"Pergunta {current_question_index + 1}: {question['question']}\n")
+            print(f"Pergunta {index_questao_atual + 1}: {pergunta['question']}\n")
 
-            for letter, option_text in question["options"].items():
-                print_option_box(letter, option_text)
+            # Exibe as opções
+            for letra, texto_pergunta in pergunta["options"].items():
+                print_option_box(letra, texto_pergunta)
 
             print("\nResponda com A, B, C ou D.")
-            if current_question_index > 0:
+
+            # Exibe opções adicionais
+            if index_questao_atual > 0:
                 print("Digite 'v' para voltar à pergunta anterior.")
             print("Digite 'p' para pular essa pergunta.")
             print("Digite 'q' para sair do quiz e voltar ao menu.")
 
-            response = input("Sua resposta: ").strip().upper()
+            # Recebe a opção/resposta do usuário
+            resposta = input("Sua resposta: ").strip().upper()
 
-            if response == "Q":
+            # Verifica se o usuário quer sair
+            if resposta == "Q":
                 print("Saindo do quiz e voltando ao menu...")
-                quit_quiz = True
+                sair_quiz = True
                 break
 
-            if response == "V":
-                if current_question_index > 0:
-                    current_question_index -= 1
-                    went_back = True
+            # Verifica se o usuário quer voltar
+            if resposta == "V":
+                if index_questao_atual > 0:
+                    index_questao_atual -= 1
+                    voltar_questao = True
                     print("Voltando para a pergunta anterior...")
                     break
                 else:
                     print("Você está na primeira pergunta, não é possível voltar.")
                     continue
 
-            if response == "P":
+            # Verifica se o usuário quer pular
+            if resposta == "P":
                 print("Você optou por pular esta pergunta.")
                 break
 
-            if response in ['A', 'B', 'C', 'D']:
-                if response == question["correct"]:
+            # Verifica se a resposta do usuário está dentro das opções da pergunta
+            if resposta in ['A', 'B', 'C', 'D']:
+                # Verifica se a resposta do usuário é correta
+                if resposta == pergunta["correct"]:
                     print("Resposta correta!")
-                    score += 1
+                    pontos += 1
                     break
+                # Caso a resposta seja incorreta, incrementa o contador de tentativas
                 else:
-                    attempts += 1
-                    if attempts < max_attempts:
-                        print(f"Resposta incorreta! Você errou {attempts} vez(es). Tente novamente.")
+                    tentativas += 1
+                    if tentativas < max_tentativas:
+                        print(f"Resposta incorreta! Você errou {tentativas} vez(es). Tente novamente.")
                     else:
                         print("Você atingiu o número máximo de tentativas para esta pergunta.")
-            else:
-                print("Opção inválida. Digite A, B, C ou D, 'v' para voltar, 'p' para pular ou 'q' para sair.")
+            
+            # Caso a resposta seja inválida, exibe uma mensagem de erro e continua o loop
+            print("Opção inválida. Digite A, B, C ou D, 'v' para voltar, 'p' para pular ou 'q' para sair.")
 
-        if quit_quiz:
+        # Verifica se a opção de sair foi escolhida
+        if sair_quiz:
             break
 
-        if not went_back:
-            current_question_index += 1
+        # Verifica se a opção de voltar não foi escolhida e avança para a pergunta seguinte
+        if not voltar_questao:
+            index_questao_atual += 1
 
     print("\n==========================================")
-    if quit_quiz:
+    # Verifica se o usuário escolheu sair e exibe uma mensagem
+    if sair_quiz:
         print("Quiz interrompido pelo usuário.")
-    else:
-        print("Fim do Quiz!")
+    # Exibe uma mensagem de conclusão
+    print("Fim do Quiz!")
 
-    print(f"Total de acertos: {score} de {current_question_index} pergunta(s) concluída(s).")
+    # Mensagem para informar o total de acertos e quantidade de perguntas respondidas
+    print(f"Total de acertos: {pontos} de {index_questao_atual} pergunta(s) concluída(s).")
     input("Pressione Enter para voltar ao menu...")

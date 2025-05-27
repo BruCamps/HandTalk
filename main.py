@@ -1,10 +1,14 @@
 import defs
 
+# Limpa o terminal
 defs.limpaTerminal()
 
+# Repetição para executar o menu
 while True:
+    # Armazena a opção escolhida do menu
     escolha = defs.menu()
 
+    # Executa a opção escolhida de acordo com o número
     if escolha == '1':
         defs.cadastro()
     elif escolha == '2':
