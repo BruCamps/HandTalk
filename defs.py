@@ -31,7 +31,6 @@ def cadastro():
     email = verificar.Email()
     senha = verificar.Senha()
     confirmaSenha = verificar.ConfirmaSenha(senha)
-    # verificar.enviar_codigo(email)
     with open("usuarios.txt", "a") as arquivo:
         arquivo.write(f"{usuario},{email},{senha}\n")
     limpaTerminal()
@@ -62,10 +61,11 @@ def alterar_usuario():
     # Recebe o email do usuário que deseja alterar
     email_procura = input("Informe o email do usuário que deseja alterar: ").strip().lower()
 
-    # Verifica se o email existe no arquivo
+    # Lê o arquivo
     with open("usuarios.txt", "r") as arquivo:
         linhas = arquivo.readlines()
 
+    # Acha um linha p preencher
     registro_encontrado = False
     registros_atualizados = []
 
@@ -236,6 +236,7 @@ def run_quiz():
 
         # Loop até atingir o limite de 3 tentativas
         while tentativas < max_tentativas:
+            limpaTerminal()
             print("\n------------------------------------------")
             print(f"Pergunta {index_questao_atual + 1}: {pergunta['question']}\n")
 
