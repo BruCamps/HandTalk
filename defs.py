@@ -125,40 +125,41 @@ def excluir_usuario():
     # Recebe o email do usuário que deseja excluir
     email_procura = input("Informe o email do usuário que deseja excluir: ").strip().lower()
 
-    # Verifica se o email existe no arquivo
+    # Lê as linhas
     with open("usuarios.txt", "r") as arquivo:
         linhas = arquivo.readlines()
 
-    registro_encontrado = False
-    registros_atualizados = []
+    # Armazena o índice da lista a ser removida (-1 indica que nenhuma linha foi encontrada)
+    indice_exclusao = -1
 
-    # Percorre as linhas do arquivo
-    for linha in linhas:
+    # Percorre as linhas do arquivo, permitindo acessar as linhas por índices
+    for i, linha in enumerate(linhas):
         usuario, email, senha = linha.strip().split(",")
 
         # Verifica se o email do usuário correspondente ao email procurado
         if email.strip().lower() == email_procura:
-            registro_encontrado = True
             senha_atual = input("Confirme sua senha atual: ").strip()
 
             # Verifica se as senhas conferem para permitir a exclusão
             if senha_atual != senha:
                 print("\033[31mSenha incorreta. Cancelando exclusão.\033[0;0m")
-                registros_atualizados.append(linha)
-                continue
+                return
+            else:
+                # Armazena a posição da linha a ser removida que se encontra o email desejado
+                indice_exclusao = i
+                break
 
-            # Mensagem para informar que o usuário foi removido
-            print(f"Usuário '{usuario}' removido.")
+    # Verifica se alguma lista foi encontrada 
+    if indice_exclusao != -1:
+        # Deleta a linha a partir do índice
+        del linhas[indice_exclusao]
 
-        else:
-            # Adiciona as linhas que não foram modificadas ao arquivo
-            registros_atualizados.append(linha)
-
-    # Atualiza o arquivo
-    if registro_encontrado:
+        # Atualiza alterações no arquivo
         with open("usuarios.txt", "w") as arquivo:
-            arquivo.writelines(registros_atualizados)
-        print("\033[32mRegistro excluído com sucesso!\033[0;0m")
+            arquivo.writelines(linhas)
+
+        # Mensagem para informar que o usuário foi removido
+        print(f"\033[32m{usuario} excluído(a) com sucesso!\033[0;0m")
     else:
         # Mensagem para informar que o registro não foi encontrado
         print("\033[31mRegistro não encontrado!\033[0;0m")
