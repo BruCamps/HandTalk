@@ -31,6 +31,7 @@ def cadastro():
     email = verificar.Email()
     senha = verificar.Senha()
     confirmaSenha = verificar.ConfirmaSenha(senha)
+    # verificar.enviar_codigo(email)
     with open("usuarios.txt", "a") as arquivo:
         arquivo.write(f"{usuario},{email},{senha}\n")
     limpaTerminal()
@@ -79,25 +80,26 @@ def alterar_usuario():
 
             # Verifica se as senhas conferem para permitir a alteração
             if senha_atual != senha:
-                print("\033[31mSenha incorreta. Cancelando alteração.\033[0;0m")
                 registros_atualizados.append(linha)
+                continue
 
             # Chama a função para atualizar os dados
             novo_usuario, novo_email, nova_senha = atualizar_dados(usuario, email, senha)
 
             # Adiciona as informações atualizadas ao arquivo
             registros_atualizados.append(f"{novo_usuario},{novo_email},{nova_senha}\n")
-
-        # Adiciona as linhas que não foram modificadas ao arquivo 
-        registros_atualizados.append(linha)
+        else:
+            # Adiciona as linhas que não foram modificadas ao arquivo 
+            registros_atualizados.append(linha)
 
     # Atualiza o arquivo
     if registro_encontrado:
         with open("usuarios.txt", "w") as arquivo:
             arquivo.writelines(registros_atualizados)
         print("\033[32mInformações atualizadas com sucesso!\033[0;0m")
-    # Mensagem para informar que o registro não foi encontrado
-    print("\033[31mRegistro não encontrado!\033[0;0m")
+    else:
+        # Mensagem para informar que o registro não foi encontrado
+        print("\033[31mRegistro não encontrado!\033[0;0m")
 
 # Função para atualizar os dados de um usuário
 def atualizar_dados(usuario_atual, email_atual, senha_atual):
@@ -148,16 +150,18 @@ def excluir_usuario():
             # Mensagem para informar que o usuário foi removido
             print(f"Usuário '{usuario}' removido.")
 
-        # Adiciona as linhas que não foram modificadas ao arquivo
-        registros_atualizados.append(linha)
+        else:
+            # Adiciona as linhas que não foram modificadas ao arquivo
+            registros_atualizados.append(linha)
 
     # Atualiza o arquivo
     if registro_encontrado:
         with open("usuarios.txt", "w") as arquivo:
             arquivo.writelines(registros_atualizados)
         print("\033[32mRegistro excluído com sucesso!\033[0;0m")
-    # Mensagem para informar que o registro não foi encontrado
-    print("\033[31mRegistro não encontrado!\033[0;0m")
+    else:
+        # Mensagem para informar que o registro não foi encontrado
+        print("\033[31mRegistro não encontrado!\033[0;0m")
 
 # Função para exibir uma caixa de opções (visual)
 def print_option_box(index_pergunta, texto_pergunta, width=50):
@@ -276,7 +280,7 @@ def run_quiz():
             if resposta in ['A', 'B', 'C', 'D']:
                 # Verifica se a resposta do usuário é correta
                 if resposta == pergunta["correct"]:
-                    print("Resposta correta!")
+                    print("Resposta correta! Você ganhou 10 pontos de XP")
                     pontos += 1
                     break
                 # Caso a resposta seja incorreta, incrementa o contador de tentativas
@@ -306,5 +310,5 @@ def run_quiz():
     print("Fim do Quiz!")
 
     # Mensagem para informar o total de acertos e quantidade de perguntas respondidas
-    print(f"Total de acertos: {pontos} de {index_questao_atual} pergunta(s) concluída(s).")
+    print(f"Total de acertos: {pontos} pontos de XP de {index_questao_atual} pergunta(s) concluída(s).")
     input("Pressione Enter para voltar ao menu...")

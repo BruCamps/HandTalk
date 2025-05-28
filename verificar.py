@@ -1,5 +1,8 @@
+# from email.mime.text import MIMEText
+# import random
+# import smtplib
 import re
-import defs
+
 
 # Regular Expression para o padrão de email
 padrao_email = r'[a-zA-Z0-9.]+@ufrpe\.br'
@@ -66,16 +69,16 @@ def Senha():
 def NovaSenha(senha_atual):
     # Repetição para verificar a nova senha até que atenda ao padrão
     while True:
-        # Variável que recebe a nova senha
-        senha_input = input(f"Nova senha (atual: {senha_atual}): ").strip()
         # Instruções de senha
         print("\033[32mSua senha deve conter pelo menos 6 caracteres, uma letra maiúscula e um caractere especial.\033[0;0m")
+        # Variável que recebe a nova senha
+        senha_input = input(f"Nova senha (atual: {senha_atual}): ").strip()
 
         # Verifica se o campo foi preenchido e retorna a senha atual
         if not senha_input:
             return senha_atual
         # Verifica se a senha contém espaços
-        elif " " in senha_input:
+        if " " in senha_input:
             print("\033[31mA senha não pode conter espaços!\033[0;0m")
             continue
         # Verifica se a senha tem menos de 6 caracteres
@@ -83,11 +86,11 @@ def NovaSenha(senha_atual):
             print("\033[31mA senha deve ter no mínimo 6 caracteres!\033[0;0m")
             continue
         # Verifica se a senha contém uma letra maiúscula
-        if re.search(r'[^A-Z]', senha_input):
+        if not re.search(r'[A-Z]', senha_input):
             print("\033[31mA senha deve conter pelo menos uma letra maiúscula!\033[0;0m")
             continue
         # Verifica se a senha não contém um caractere especial
-        if not re.search(r'[^a-zA-Z0-9]', senha_input):
+        if not re.search(r'[a-zA-Z0-9]', senha_input):
             print("\033[31mA senha deve conter pelo menos um caractere especial!\033[0;0m")
             continue
 
@@ -138,6 +141,35 @@ def Email():
         # Mensagem para informar que o email é inválido
         print("\033[31mEmail inválido. O email deve ser válido e do domínio '@ufrpe.br'.\033[0;0m")
         continue
+
+# def validar_email(email):
+#     regex = r"^[a-zA-Z0-9.]+@[a-zA-Z0-9-] +\.[A-Za-z0-9-.]+$"
+#     return re.match(regex, email) is not None
+
+# def enviar_codigo(email):
+#     codigo = str(random.randint(100000 , 999999))
+
+#     remetente = "handtalk.bsi@gmail.com"
+#     senha_app = "uocuaacfceziatkz"
+#     assunto = "Código de autenticação HandTalk"
+#     mensagem = f"seu código de autenticação é: {codigo}"
+
+#     msg = MIMEText(mensagem, "plain", "utf-8")
+#     msg["Suject"] = assunto
+#     msg["From"] = remetente
+#     msg["To"] = email
+
+#     try:
+#         with smtplib.SMTP("smtp.gmail.com", 587) as servidor:
+#             servidor.starttls()
+#             servidor.login(remetente, senha_app)
+#             servidor.sendmail(remetente, email, msg.as_string())
+#         print("Código enviado para o seu email!")
+#         return codigo
+#     except Exception as e:
+#         print("Erro ao enviar email: ", e)
+#         return None
+    
 
 # Verificação do campo Novo Email
 def NovoEmail(email_atual):
