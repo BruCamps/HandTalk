@@ -3,7 +3,6 @@
 # import smtplib
 import re
 
-
 # Regular Expression para o padrão de email
 padrao_email = r'[a-zA-Z0-9.]+@ufrpe\.br'
 
@@ -13,7 +12,7 @@ def Nome():
     while True:
         
         # Variável que recebe o nome
-        nome = input("Informe o nome: ").strip().title()
+        nome = input("Informe o nome: ").strip()
 
         # Verifica se o campo foi preenchido
         if not nome:
@@ -23,7 +22,7 @@ def Nome():
             print("\033[31mNão é válido utilização de números.\033[0;0m")
             continue
         elif(re.search(r'[^a-zA-Z0-9]', nome)):
-            print("Possui caracteres. Não é aceito.")    
+            print("\033[31mNome inválido. Possui caracteres especiais.\033[0;0m")    
             continue
         # Verifica se o nome contém algo que não seja letra
         elif (re.search(r'[a-zA-Z]', nome)):
