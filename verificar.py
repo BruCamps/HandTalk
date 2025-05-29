@@ -1,13 +1,11 @@
-# from email.mime.text import MIMEText
-# import random
-# import smtplib
+import random
 import re
 
 # Regular Expression para o padrão de email
 padrao_email = r'[a-zA-Z0-9.]+@ufrpe\.br'
 
 # Verificação do campo Nome
-def Nome():
+def verificarNome():
     # Repetição para verificar o nome até que atenda ao padrão
     while True:
         
@@ -32,7 +30,7 @@ def Nome():
         print("\033[31mInsira um nome válido.\033[0;0m")
 
 # Verificação do campo Senha
-def Senha():
+def verificarSenha():
     # Repetição para verificar a senha até que atenda ao padrão
     while True:
         # Instruções de senha
@@ -65,7 +63,7 @@ def Senha():
         return senha
 
 # Verificação do campo Nova Senha
-def NovaSenha(senha_atual):
+def verificarNovaSenha(senha_atual):
     # Repetição para verificar a nova senha até que atenda ao padrão
     while True:
         # Instruções de senha
@@ -97,7 +95,7 @@ def NovaSenha(senha_atual):
         return senha_input
 
 # Verificação do campo Confirma Senha
-def ConfirmaSenha(senha):
+def verificarConfirmaSenha(senha):
     # Repetição para verificar a senha até que atenda ao padrão
     while True:
         # Variável que recebe a senha
@@ -116,7 +114,7 @@ def ConfirmaSenha(senha):
         return confirmaSenha
 
 # Verificação do campo Email
-def Email():
+def verificarEmail():
     # Repetição para verificar o email até que atenda ao padrão
     while True:
         # Variável que recebe o email
@@ -141,37 +139,8 @@ def Email():
         print("\033[31mEmail inválido. O email deve ser válido e do domínio '@ufrpe.br'.\033[0;0m")
         continue
 
-# def validar_email(email):
-#     regex = r"^[a-zA-Z0-9.]+@[a-zA-Z0-9-] +\.[A-Za-z0-9-.]+$"
-#     return re.match(regex, email) is not None
-
-# def enviar_codigo(email):
-#     codigo = str(random.randint(100000 , 999999))
-
-#     remetente = "handtalk.bsi@gmail.com"
-#     senha_app = "uocuaacfceziatkz"
-#     assunto = "Código de autenticação HandTalk"
-#     mensagem = f"seu código de autenticação é: {codigo}"
-
-#     msg = MIMEText(mensagem, "plain", "utf-8")
-#     msg["Suject"] = assunto
-#     msg["From"] = remetente
-#     msg["To"] = email
-
-#     try:
-#         with smtplib.SMTP("smtp.gmail.com", 587) as servidor:
-#             servidor.starttls()
-#             servidor.login(remetente, senha_app)
-#             servidor.sendmail(remetente, email, msg.as_string())
-#         print("Código enviado para o seu email!")
-#         return codigo
-#     except Exception as e:
-#         print("Erro ao enviar email: ", e)
-#         return None
-    
-
 # Verificação do campo Novo Email
-def NovoEmail(email_atual):
+def verificarNovoEmail(email_atual):
     # Repetição para verificar o email até que atenda ao padrão
     while True:
         # Variável que recebe o email
@@ -189,7 +158,7 @@ def NovoEmail(email_atual):
         continue
 
 # Verificação do campo Usuário
-def Usuario():
+def verificarUsuario():
     # Repetição para verificar o usuário até que atenda ao padrão
     while True:
         # Variável que recebe o nome de usuário
@@ -232,3 +201,19 @@ def NovoUsuario(usuario_atual):
         
         # Retorna o nome de usuário caso ele seja válido
         return usuario_input
+
+def verificarCodigo():
+    # Repetição para verificar se o código
+    while True:
+        # Gera o código aleatoriamente a partir do random
+        codigoGerado = str(random.randint(100000 , 999999))
+        # Instrução
+        codigo = input(f"Antes de prosseguir, repita o código gerado abaixo:\n{codigoGerado}\n-> ")
+
+        # Verifica se o código informado é igual ao código gerado aleatoriamente
+        if(codigo != codigoGerado):
+            print("\033[31mO código foi digitado incorretamente! Tente de novo.\033[0;0m")
+            continue
+        else:
+            print("\033[32mVerificação concluída!\033[0;0m")
+            break

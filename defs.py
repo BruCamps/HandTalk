@@ -26,11 +26,13 @@ def menu():
 def cadastro():
     limpaTerminal()
     print("\033[36mCadastrar\033[0;0m")
-    nome = verificar.Nome()
-    usuario = verificar.Usuario()
-    email = verificar.Email()
-    senha = verificar.Senha()
-    confirmaSenha = verificar.ConfirmaSenha(senha)
+    nome = verificar.verificarNome()
+    usuario = verificar.verificarUsuario()
+    email = verificar.verificarEmail()
+    senha = verificar.verificarSenha()
+    confirmaSenha = verificar.verificarConfirmaSenha(senha)
+    codigo = verificar.verificarCodigo()
+
     with open("usuarios.txt", "a") as arquivo:
         arquivo.write(f"{usuario},{email},{senha}\n")
     limpaTerminal()
@@ -42,8 +44,8 @@ def cadastro():
 def login():
     limpaTerminal()
     print("\033[36mLogin\033[0;0m")
-    usuario_email = verificar.Email()
-    usuario_senha = verificar.Senha()
+    usuario_email = verificar.verificarEmail()
+    usuario_senha = verificar.verificarSenha()
 
     # Verifica se o email e a senha existem no arquivo
     with open("usuarios.txt", "r") as arquivo:
@@ -110,11 +112,11 @@ def atualizar_dados(usuario_atual, email_atual, senha_atual):
     novo_usuario = usuario_input
 
     # Atualiza o email:
-    email_input = verificar.NovoEmail(email_atual) 
+    email_input = verificar.verificarNovoEmail(email_atual) 
     novo_email = email_input
 
     # Atualiza a senha:
-    senha_input = verificar.NovaSenha(senha_atual)
+    senha_input = verificar.verificarNovaSenha(senha_atual)
     nova_senha = senha_input
 
     # Retorna os dados atualizados
