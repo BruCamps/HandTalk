@@ -1,4 +1,4 @@
-<h1>Projeto Handtalk</h1>
+<h1>Projeto Handtalk 👐 </h1>
 
 Universidade Federal Rural de Pernambuco <br>
 Departamento de Estatística e Informática <br>
