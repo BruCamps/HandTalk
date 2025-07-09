@@ -2,7 +2,7 @@
 
 Universidade Federal Rural de Pernambuco <br>
 Departamento de Estatística e Informática <br>
-Bacharelado em Sistemas da Informação <br>
+Bacharelado em Sistemas de Informação <br>
 Disciplina: Projeto Interdisciplinar para Sistemas de Informação <br>
 
 <h2>⚙️ Funcionalidades</h2>
@@ -15,11 +15,16 @@ Disciplina: Projeto Interdisciplinar para Sistemas de Informação <br>
 
 <h3> Tecnologias Utilizadas</h3>
 
+---
 **Python 3**<br>
 **bibliotecas**: <br>
 - ``os`` para limpar o terminal <br>
 - ``re``para verificar os campos <br>
 - ``random``para gerar código de verificação de e-mail <br>
+- ``CustomTkinter`` para Interface Gráfica <br>
+
+
+<h4>Interfaces</h4>
 
 
 
