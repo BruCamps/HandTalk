@@ -1,9 +1,9 @@
 <h1>Projeto Handtalk</h1>
 
 **Universidade Federal Rural de Pernambuco** <br>
-Departamento de Estatística e Informática <br>
-Bacharelado em Sistemas de Informação <br>
-Disciplina: Projeto Interdisciplinar para Sistemas de Informação <br>
+**Departamento de Estatística e Informática** <br>
+**Bacharelado em Sistemas de Informação** <br>
+**Disciplina: Projeto Interdisciplinar para Sistemas de Informação** <br>
 
 <h2>⚙️ Funcionalidades:</h2>
 
