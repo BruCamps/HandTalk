@@ -1,29 +1,31 @@
-import defs
+import flet as ft
+from telas.login import mostrar_login
+from telas.cadastro import mostrar_cadastro
+from db.database import inicializar_db
+from telas.tabs import mostrar_tabs
 
-# Limpa o terminal
-defs.limpaTerminal()
+def main(page: ft.Page):
+    page.bgcolor = "#FFFFFF"
+    page.window.width = 412
+    page.window.height = 917
+    page.window.resizable = True
+    page.window.left = 1000
 
-# Repetição para executar o menu
-while True:
-    # Armazena a opção escolhida do menu
-    escolha = defs.menu()
-
-    # Executa a opção escolhida de acordo com o número
-    if escolha == '1':
-        defs.cadastro()
-    elif escolha == '2':
-        defs.login()
-    elif escolha == '3':
-        defs.run_quiz()
-    elif escolha == '4':  
-        defs.alterar_usuario()
-    elif escolha == '5': 
-        defs.excluir_usuario()
-    elif escolha == '0':
-        print('\033[36mSaindo...\033[0;0m')
-        break
-    else:
-        defs.limpaTerminal()
-        defs.criaBarra()
-        print('\033[31mOpção inválida!\033[0;0m')
-        defs.criaBarra()
+    page.fonts = {
+        "InstrumentSans": "fonts/InstrumentSans-Regular.ttf",
+        "InstrumentSans Medium": "fonts/InstrumentSans-Medium.ttf",
+        "InstrumentSans SemiBold": "fonts/InstrumentSans-SemiBold.ttf",
+        "InstrumentSans Bold": "fonts/InstrumentSans-Bold.ttf",
+        "InstrumentSans BoldItalic": "fonts/InstrumentSans-BoldItalic.ttf",
+    }
+    page.theme = ft.Theme(font_family="InstrumentSans")
+  
+    page.vertical_alignment = "center"
+    page.horizontal_alignment = "center"
+ 
+    mostrar_tabs(page)
+    
+   
+if __name__ == "__main__":
+    inicializar_db()
+    ft.app(target=main, name="HandTalk")
