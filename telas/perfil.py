@@ -1,46 +1,25 @@
 import flet as ft
-from src.components.entradas import *
-from src.components.icons import *
-from src.components.utils.funcoes import *
+from components.entradas import *
+from components.icons import *
+from utils.funcoes import *
 from db.database import conectar
 from core.state import estado
-from telas.chart import gerar_grafico_minimalista
+from utils.chart import gerar_grafico_minimalista
 from PIL import Image
 import base64
 from core.menu import MenuNavegacao
-from datetime import datetime
-from collections import defaultdict
 from telas.tabs import mostrar_tabs
+from components.containers import *
 
 def mostrar_perfil(page: ft.Page, menu: MenuNavegacao):
     page.theme = ft.Theme(font_family="InstrumentSans")
-    mensagem = ft.Text("", text_align="center", size=18, font_family="InstrumentSans SemiBold", color="#006A71", visible=False)
-
     page.controls.clear()
-
-    import core.menu as menu
 
     u = estado.usuario_logado
     nome_perfil.value = u.nome
     email_perfil.value = u.email
 
-    # def salvar_dados(e):
-    #     pass
-    #     conn = conectar()
-    #     cursor = conn.cursor()
-    #     try:
-    #         cursor.execute("UPDATE usuarios SET nome = ?, email = ? WHERE id = ?", (nome_perfil.value, email_perfil.value, u.id))
-    #         conn.commit()
-    #         u.nome = nome_perfil.value
-    #         u.email = email_perfil.value
-    #         mensagem.value = "Dados atualizados com sucesso!"
-    #         mensagem.color = ft.Colors.GREEN
-    #     except:
-    #         mensagem.value = "Erro ao atualizar dados."
-    #         mensagem.color = ft.Colors.RED
-    #     finally:
-    #         conn.close()
-    #     mostrar_perfil(page, menu)
+    import core.menu as menu
 
     def sair(e):
         estado.usuario_logado = None
@@ -48,33 +27,6 @@ def mostrar_perfil(page: ft.Page, menu: MenuNavegacao):
         senha_login.value = ""
         autenticar(page, email_login, senha_login, menu)
         mostrar_tabs(page)
-
-    conn = conectar()
-    cursor = conn.cursor()
-    cursor.execute("SELECT acertos, erros, data FROM desempenho WHERE user_id = ?", (u.id,))
-    resultados = cursor.fetchall()
-    conn.close()
-
-    conn = conectar()
-    cursor = conn.cursor()
-    cursor.execute("SELECT SUM(quizs_concluidos) FROM desempenho WHERE user_id = ?", (u.id,))
-    resultado_quiz = cursor.fetchone()
-    conn.close()
-
-    total_quizzes = resultado_quiz[0] if resultado_quiz and resultado_quiz[0] else 0
-
-    # Organizar por dia da semana
-    semana = ["Seg", "Ter", "Qua", "Qui", "Sex", "Sáb", "Dom"]
-    acertos_por_dia = defaultdict(int)
-    erros_por_dia = defaultdict(int)
-
-    for acertos, erros, data in resultados:
-        dia_semana = datetime.strptime(data, "%Y-%m-%d").weekday()
-        acertos_por_dia[dia_semana] += acertos
-        erros_por_dia[dia_semana] += erros
-
-    acertos_valores = [acertos_por_dia.get(i,0) for i in range(7)]
-    erros_valores = [erros_por_dia.get(i,0) for i in range(7)]
 
     conn = conectar()
     cursor = conn.cursor()
@@ -86,7 +38,7 @@ def mostrar_perfil(page: ft.Page, menu: MenuNavegacao):
     if row and row[0] and isinstance(row[0], bytes):
         imagem_base64 = base64.b64encode(row[0]).decode('utf-8')
 
-    grafico = gerar_grafico_minimalista(semana, acertos_valores, erros_valores)
+    grafico = gerar_grafico_minimalista()
 
     icon_points.width = 36
     icon_points.height = 36
@@ -108,50 +60,6 @@ def mostrar_perfil(page: ft.Page, menu: MenuNavegacao):
             border_radius=160, fit="cover"
         )
     ], alignment=ft.alignment.center)
-
-    container_pontos = ft.Row([
-        icon_points,
-        ft.Column([
-            ft.Text(f"{u.xp}", size=20, font_family="InstrumentSans Bold", color="#006A71"),
-            ft.Text("Pontos", size=16, font_family="InstrumentSans SemiBold", color="#AEAEAE"),
-        ],
-            alignment=ft.alignment.center,
-            spacing=2
-        )
-    ], spacing=8, alignment=ft.alignment.center, width=150)
-
-    container_streak = ft.Row([
-        icon_streak,
-        ft.Column([
-            ft.Text(f"{u.streak}", size=20, font_family="InstrumentSans Bold", color="#006A71"),
-            ft.Text("Frequência", size=16, font_family="InstrumentSans SemiBold", color="#AEAEAE"),
-        ],
-            alignment=ft.alignment.center,
-            spacing=2
-        )
-    ], spacing=8, alignment=ft.alignment.center, width=150)
-
-    container_quiz = ft.Row([
-        icon_book,
-        ft.Column([
-            ft.Text(f"{total_quizzes}", size=20, font_family="InstrumentSans Bold", color="#006A71"),
-            ft.Text("Conteúdos", size=16, font_family="InstrumentSans SemiBold", color="#AEAEAE"),
-        ],
-            alignment=ft.alignment.center,
-            spacing=2
-        )
-    ], spacing=8, alignment=ft.alignment.center, width=150)
-
-    container_emblema = ft.Row([
-        icon_emblem,
-        ft.Column([
-            ft.Text(f"{len(u.conquistas)}", size=20, font_family="InstrumentSans Bold", color="#006A71"),
-            ft.Text("Conquistas", size=16, font_family="InstrumentSans SemiBold", color="#AEAEAE"),
-        ],
-            alignment=ft.alignment.center,
-            spacing=2
-        )
-    ], spacing=8, alignment=ft.alignment.center, width=150)
 
     from telas.editar_perfil import mostrar_tela_edicao_perfil
     
@@ -195,7 +103,6 @@ def mostrar_perfil(page: ft.Page, menu: MenuNavegacao):
                             alignment=ft.alignment.center
                         )
                     ], alignment="center", spacing=10),
-                    mensagem,
                     ft.Container(
                         content=ft.Text("Estatísticas", text_align="center", size=24, font_family="InstrumentSans SemiBold", color="#006A71"),
                         alignment=ft.alignment.center,

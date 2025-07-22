@@ -1,7 +1,7 @@
 import hashlib
 
 class User:
-    def __init__(self, user_id, nome, email, senha_hash, xp=0, streak=0):
+    def __init__(self, user_id, nome, email, senha_hash, xp=0, streak=0, progresso=None):
         self.id = user_id
         self.nome = nome
         self.email = email
@@ -10,6 +10,7 @@ class User:
         self.vida = 3
         self.streak = streak
         self.conquistas = []
+        self.progresso = progresso or {}
 
     def verificar_senha(self, senha_digitada):
         return self.senha_hash == self.gerar_hash_senha(senha_digitada)

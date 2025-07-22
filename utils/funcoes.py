@@ -1,8 +1,8 @@
 import flet as ft
 from core.user_manager import UserManager
-from src.components.entradas import *
-from src.components.icons import *
-from src.components.mensagens import *
+from components.entradas import *
+from components.icons import *
+from components.mensagens import *
 from core.state import estado
 from core.menu import MenuNavegacao 
 import time

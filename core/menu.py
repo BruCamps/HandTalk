@@ -1,5 +1,5 @@
 import flet as ft
-from src.components.icons import *
+from components.icons import *
 
 class MenuNavegacao(ft.Container):
     def __init__(self, page):

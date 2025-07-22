@@ -42,10 +42,11 @@ main.py   #Arquivo contendo o ponto de entrada do programa (menu).
   
 ![interface handtalk](https://github.com/user-attachments/assets/1a32e308-84f5-4b31-a88a-7ab3ef35e04b)
 
+
 - Interface Gráfica do Usuário (GUI):
 
-  ![SplashScreen](https://github.com/user-attachments/assets/3cc604b8-0614-4ce3-be10-5fcf54256d35)    ![Home](https://github.com/user-attachments/assets/589141b9-dd81-4ff2-b8a0-43e193831372)
-
+![interface handtalk](SplashScreen.png)
+![Home](https://github.com/user-attachments/assets/589141b9-dd81-4ff2-b8a0-43e193831372)
 
 Melhorias Futuras:
 ---

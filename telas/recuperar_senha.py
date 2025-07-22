@@ -1,14 +1,13 @@
 import flet as ft
-from src.components.entradas import *
-from src.components.utils.funcoes import *
+from components.entradas import *
+from utils.funcoes import *
 from telas.verificacao_codigo import gerar_codigo
-from src.components.mensagens import *
+from components.mensagens import *
 from db.database import conectar
-
 
 def enviar_codigo_email(destinatario, nome, codigo):
     try:
-        msg = MIMEMultipart('related')  # 'related' para imagens
+        msg = MIMEMultipart('related')
         msg['Subject'] = 'Código de Verificação - HandTalk'
         msg['From'] = f'{SENDER_NAME} <{EMAIL_SENDER}>'
         msg['To'] = destinatario
@@ -24,17 +23,15 @@ def enviar_codigo_email(destinatario, nome, codigo):
             </html>
         """
 
-        # Corpo alternativo (HTML)
         msg_alternative = MIMEMultipart('alternative')
         msg.attach(msg_alternative)
 
         msg_html = MIMEText(html, 'html')
         msg_alternative.attach(msg_html)
 
-        # Adiciona a imagem com Content-ID correto
         with open('src/assets/HandTalk-Banner.png', 'rb') as image_file:
             msg_image = MIMEImage(image_file.read(), 'png')
-            msg_image.add_header('Content-ID', '<banner_image>')  # com <>
+            msg_image.add_header('Content-ID', '<banner_image>')
             msg_image.add_header('Content-Disposition', 'inline', filename='HandTalk-Banner.png')
             msg.attach(msg_image)
 

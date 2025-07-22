@@ -1,39 +1,84 @@
 perguntas_por_trilha = {
-    "Introdução à Lógica": [
-        {
-            "enunciado": "Todo programa começa com qual estrutura?",
-            "alternativas": ["funcao inicio()", "se", "variável", "escreva"],
-            "correta": 0,
-            "explicacao": "Todo programa em Portugol começa com a função inicio()."
-        },
-    ],
-    "Variáveis": [
-        {
-            "enunciado": "Qual tipo é usado para números com ponto?",
-            "alternativas": ["inteiro", "cadeia", "real", "logico"],
-            "correta": 2,
-            "explicacao": "O tipo 'real' é usado para representar números decimais."
-        },
-    ],
-    "Condicionais": [
-        {
-            "enunciado": "Qual comando é usado para decisões?",
-            "alternativas": ["enquanto", "se", "para", "caso"],
-            "correta": 1,
-            "explicacao": "'se' é o comando condicional usado para tomar decisões."
-        },
-    ],
-    "Laços de Repetição": [
-        {
-            "enunciado": "Qual laço repete enquanto uma condição for verdadeira?",
-            "alternativas": ["para", "enquanto", "caso", "faça"],
-            "correta": 1,
-            "explicacao": "O laço 'enquanto' continua executando enquanto a condição for verdadeira."
-        },
-    ]
+    "Seção 1: Primeiros Passos": {
+        "descrição": "Aprenda os conceitos iniciais do Portugol.",
+        "capitulos": {
+            "Introdução ao Portugol": {
+                "concluido": False,
+                "perguntas": [
+                    {
+                        "enunciado": "Qual comando é usado para imprimir uma mensagem na tela?",
+                        "alternativas": ["escreva", "imprima", "escrever", "imprimir"],
+                        "correta": 0,
+                        "explicacao": "'escreva' é o comando usado para imprimir uma mensagem na tela."
+                    },
+                    {
+                        "enunciado": "Qual comando é usado para ler uma entrada do usuário?",
+                        "alternativas": ["leia", "ler", "entrada", "input"],
+                        "correta": 0,
+                        "explicacao": "'leia' é o comando usado para ler uma entrada do usuário."
+                    }
+                ]
+            },
+            "Variáveis e Tipos de Dados": {
+                "concluido": False,
+                "perguntas": [
+                    {
+                        "enunciado": "Qual comando é usado para imprimir uma mensagem na tela 1?",
+                        "alternativas": ["escreva", "imprima", "escrever", "imprimir"],
+                        "correta": 0,
+                        "explicacao": "'escreva' é o comando usado para imprimir uma mensagem na tela."
+                    },
+                    {
+                        "enunciado": "Qual comando é usado para ler uma entrada do usuário?",
+                        "alternativas": ["ler", "leia", "entrada", "input"],
+                        "correta": 1,
+                        "explicacao": "'leia' é o comando usado para ler uma entrada do usuário."
+                    }
+                ]
+            }
+        }
+    },
+    "Seção 2: Estruturas de Repetição": {
+        "descrição": "Aprenda os conceitos de estruturas de repetição em Portugol.",
+        "capitulos": {
+            "Estruturas de Repetição 1": {
+                "concluido": False,
+                "perguntas": [
+                    {
+                        "enunciado": "Qual comando é usado para imprimir uma mensagem na tela?",
+                        "alternativas": ["escreva", "imprima", "escrever", "imprimir"],
+                        "correta": 0,
+                        "explicacao": "'escreva' é o comando usado para imprimir uma mensagem na tela."
+                    },
+                    {
+                        "enunciado": "Qual comando é usado para ler uma entrada do usuário?",
+                        "alternativas": ["ler", "leia", "entrada", "input"],
+                        "correta": 1,
+                        "explicacao": "'leia' é o comando usado para ler uma entrada do usuário."
+                    }
+                ]
+            },
+            "Estruturas de Repetição 2": {
+                "concluido": False,
+                "perguntas": [
+                    {
+                        "enunciado": "Qual comando é usado para imprimir uma mensagem na tela?",
+                        "alternativas": ["escreva", "imprima", "escrever", "imprimir"],
+                        "correta": 0,
+                        "explicacao": "'escreva' é o comando usado para imprimir uma mensagem na tela."
+                    },
+                    {
+                        "enunciado": "Qual comando é usado para ler uma entrada do usuário?",
+                        "alternativas": ["ler", "leia", "entrada", "input"],
+                        "correta": 1,
+                        "explicacao": "'leia' é o comando usado para ler uma entrada do usuário."
+                    }
+                ]
+            }
+        }
+    }
 }
 
-# Para facilitar, exporta só a lista de trilhas (chaves do dicionário)
+
+# Exporta a lista de trilhas (chaves do dicionário)
 trilhas_disponiveis = list(perguntas_por_trilha.keys())
-# Para facilitar, exporta a lista de perguntas de uma trilha (valores do dicionário)
-perguntas_disponiveis = list(perguntas_por_trilha.values())

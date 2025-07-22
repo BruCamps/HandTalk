@@ -81,6 +81,9 @@ class UserManager:
 
         if user_data:
             user = User(*user_data)
+            from db.database import carregar_progresso
+            carregar_progresso(user)
+            
             if user.verificar_senha(senha):
                 return user
         return None
@@ -142,6 +145,3 @@ class UserManager:
             return False, ""
 
         return True, ""
-
-
-    

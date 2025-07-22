@@ -1,11 +1,16 @@
 import flet as ft
 from core.user import User
+from db.database import conectar
 
 class QuizSession:
-    def __init__(self, user: User, perguntas: list, trilha: str = None):
+    def __init__(
+        self, user: User, perguntas: list, 
+        trilha: str = None, capitulo: str = None
+    ):
         self.user = user
         self.perguntas = perguntas.copy()
         self.trilha = trilha
+        self.capitulo = capitulo
         self.pergunta_atual = 0
         self.quizs_concluidos = 0
         self.vidas_restantes = 3
@@ -32,6 +37,22 @@ class QuizSession:
         self.pergunta_atual += 1
         self.perguntas.extend(self.perguntas_puladas)
         self.perguntas_puladas = []
+
+    def registrar_conclusao(self):
+        if self.trilha and self.capitulo:
+            if self.trilha not in self.user.progresso:
+                self.user.progresso[self.trilha] = {}
+
+            self.user.progresso[self.trilha][self.capitulo] = True
+
+            conn = conectar()
+            cursor = conn.cursor()
+            cursor.execute("""
+                INSERT OR REPLACE INTO progresso (user_id, trilha, capitulo, concluido)
+                VALUES (?, ?, ?, ?)
+            """, (self.user.id, self.trilha, self.capitulo, 1))
+            conn.commit()
+            conn.close()
 
     def terminou(self):
         return self.pergunta_atual >= len(self.perguntas) or self.vidas_restantes <= 0
