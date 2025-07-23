@@ -9,7 +9,7 @@ import base64
 from db.database import conectar
 from core.state import estado
 from collections import defaultdict
-from datetime import datetime
+from datetime import datetime, timedelta
 
 def gerar_grafico_minimalista():
     u = estado.usuario_logado
@@ -26,6 +26,11 @@ def gerar_grafico_minimalista():
 
     for acertos, erros, data in resultados:
         dia_semana = datetime.strptime(data, "%Y-%m-%d").weekday()
+        # Quando for segunda-feira, zerar todos os dados de acertos e erros
+        if dia_semana == 0:
+            acertos_por_dia = defaultdict(int)
+            erros_por_dia = defaultdict(int)
+
         acertos_por_dia[dia_semana] += acertos
         erros_por_dia[dia_semana] += erros
 

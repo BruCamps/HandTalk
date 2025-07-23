@@ -80,5 +80,5 @@ perguntas_por_trilha = {
 }
 
 
-# Exporta a lista de trilhas (chaves do dicionário)
+# Para facilitar, exporta só a lista de trilhas (chaves do dicionário)
 trilhas_disponiveis = list(perguntas_por_trilha.keys())

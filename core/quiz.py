@@ -65,5 +65,7 @@ class QuizSession:
         return xp
 
     def quantidade_quiz_concluidos(self):
-        self.quizs_concluidos += 1
+        if self.trilha and self.capitulo:
+            if self.user.progresso.get(self.trilha, {}).get(self.capitulo, False):
+                self.quizs_concluidos += 1
         return self.quizs_concluidos

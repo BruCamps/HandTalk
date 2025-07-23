@@ -17,6 +17,7 @@ class ButtonIcon(ft.IconButton):
         self.width = width
         self.height = height
         self.highlight_color = highlight_color
+        self.on_click = on_click
 
 class ButtonIconRed(ft.IconButton):
     def __init__(
@@ -28,3 +29,4 @@ class ButtonIconRed(ft.IconButton):
         self.width = width
         self.height = height
         self.highlight_color = highlight_color
+        self.on_click = on_click

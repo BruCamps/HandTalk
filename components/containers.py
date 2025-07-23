@@ -1,10 +1,10 @@
 import flet as ft
 from core.state import estado
-from components.texts import *
 from components.icons import *
 from core.customContainers import *
 from core.customTexts import *
 from db.database import conectar
+from datetime import datetime, timedelta
 
 u = estado.usuario_logado
 

@@ -36,11 +36,74 @@ def enviar_codigo_email(destinatario, nome, codigo):
 
         html = f"""
             <html>
+                <head>
+                    <style>
+                    body {{
+                        font-family: Arial, sans-serif;
+                        background-color: #f9f9f9;
+                        margin: 0;
+                        padding: 0;
+                    }}
+                    .container {{
+                        max-width: 600px;
+                        margin: 30px auto;
+                        background: #ffffff;
+                        padding: 30px;
+                        border-radius: 8px;
+                        box-shadow: 0 0 10px rgba(0,0,0,0.05);
+                        text-align: center;
+                    }}
+                    .banner {{
+                        width: 100%;
+                        height: auto;
+                        border-radius: 6px;
+                        margin-bottom: 20px;
+                    }}
+                    .title {{
+                        font-size: 22px;
+                        font-weight: bold;
+                        color: #333333;
+                    }}
+                    .message {{
+                        font-size: 16px;
+                        color: #555555;
+                        margin-top: 20px;
+                        line-height: 1.6;
+                    }}
+                    .code {{
+                        display: inline-block;
+                        background-color: #f0f0f0;
+                        padding: 12px 24px;
+                        font-size: 20px;
+                        font-weight: bold;
+                        color: #000;
+                        border-radius: 6px;
+                        margin-top: 15px;
+                    }}
+                    .footer {{
+                        font-size: 13px;
+                        color: #999;
+                        margin-top: 30px;
+                    }}
+                    </style>
+                </head>
                 <body>
-                    <img src="cid:banner_image">
-                    <p>Olá, <b>{nome}</b>! Seja bem-vindo(a) ao <b>HandTalk</b> 👋<br>
-                    Seu código de verificação é: <b>{codigo}</b><br><br>
-                    Este código é válido por 5 minutos.</>
+                    <div class="container">
+                    <img src="cid:banner_image" alt="Banner" class="banner" />
+                    <div class="title">Confirmação de Email</div>
+                    <div class="message">
+                        Olá, <b>{nome}</b>! 👋<br><br>
+                        Aqui está seu código de verificação:
+                    </div>
+                    <div class="code">{codigo}</div>
+                    <div class="message">
+                        Este código é válido por 5 minutos.<br>
+                        Se você não solicitou este código, por favor ignore este e-mail.
+                    </div>
+                    <div class="footer">
+                        © 2025 HandTalk. Todos os direitos reservados.
+                    </div>
+                    </div>
                 </body>
             </html>
         """

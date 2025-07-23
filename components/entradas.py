@@ -3,29 +3,32 @@ from components.icons import *
 from utils.funcoes import *
 from core.customTextFields import *
 from core.customContainers import *
+from core.user_manager import UserManager
+from components.mensagens import *
 
 ft.Theme(font_family="InstrumentSans")
 
 # Entradas do Cadastro
 nome = CustomTextField(suffix_icon=icon_name, hint_text="Digite seu nome")
 email = CustomTextField(suffix_icon=icon_mail, hint_text="Digite seu email")
-senha = PasswordTextField(suffix_icon=icon_eyeoff_senha, hint_text="Digite sua senha")
-confirmacao_senha = PasswordTextField(suffix_icon=icon_eyeoff_confirma_senha, hint_text="Confirme sua senha")
+senha = PasswordTextField(icon_regular_closed=icon_eyeoff_senha, hint_text="Digite sua senha")
+
+confirmacao_senha = PasswordTextField(icon_regular_closed=icon_eyeoff_confirma_senha, hint_text="Confirme sua senha")
 
 # Entradas do Login
 email_login = CustomTextField(suffix_icon=icon_mail_login, hint_text="Digite seu email")
-senha_login = PasswordTextField(suffix_icon=icon_eyeoff_senha_login, hint_text="Digite sua senha")
+senha_login = PasswordTextField(icon_regular_closed=icon_eyeoff_senha_login, hint_text="Digite sua senha")
 
 # Entradas do Editar Perfil
 nome_perfil = CustomTextField(suffix_icon=icon_name_perfil, hint_text="Digite seu nome")
 email_perfil = CustomTextField(suffix_icon=icon_mail_perfil, hint_text="Digite seu email")
-senha_perfil = PasswordTextField(suffix_icon=icon_eyeoff_senha_perfil, hint_text="Digite sua senha atual")
-senha_nova_perfil = PasswordTextField(suffix_icon=icon_eyeoff_nova_senha_perfil, hint_text="Digite sua nova senha")
+senha_perfil = PasswordTextField(icon_regular_closed=icon_eyeoff_senha_perfil, hint_text="Digite sua senha atual")
+senha_nova_perfil = PasswordTextField(icon_regular_closed=icon_eyeoff_nova_senha_perfil, hint_text="Digite sua nova senha")
 
 # Entradas do Recuperar Senha
 email_recuperacao = CustomTextField(suffix_icon=icon_mail_recuperacao, hint_text="Digite seu email")
-senha_nova_recuperacao = PasswordTextField(suffix_icon=icon_eyeoff_senha_recuperacao, hint_text="Digite sua nova senha")
-confirmacao_senha_recuperacao = PasswordTextField(suffix_icon=icon_eyeoff_confirma_senha_recuperacao, hint_text="Confirme sua senha")
+senha_nova_recuperacao = PasswordTextField(icon_regular_closed=icon_eyeoff_senha_recuperacao, hint_text="Digite sua nova senha")
+confirmacao_senha_recuperacao = PasswordTextField(icon_regular_closed=icon_eyeoff_confirma_senha_recuperacao, hint_text="Confirme sua senha")
 
 """
         Containers de Entradas

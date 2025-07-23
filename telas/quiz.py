@@ -13,8 +13,6 @@ def iniciar_quiz(page: ft.Page, trilha: str, capitulo: str):
     perguntas = perguntas_por_trilha[trilha]["capitulos"][capitulo]["perguntas"]
 
     estado.sessao_quiz = QuizSession(estado.usuario_logado, perguntas, trilha, capitulo)
-    
-   
 
     mostrar_pergunta(page)
 

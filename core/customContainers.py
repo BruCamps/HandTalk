@@ -9,7 +9,6 @@ class InputContainer(ft.Container):
         width=343, bgcolor="#E7F9FD", border_radius=15, 
         padding=ft.padding.only(right=8), 
         margin=ft.margin.only(bottom=16), 
-        visible=True
     ):
         super().__init__()
         self.content = content
@@ -18,7 +17,7 @@ class InputContainer(ft.Container):
         self.border_radius = border_radius
         self.padding = padding
         self.margin = margin
-        self.visible = visible
+
 
 class MessageContainer(ft.Container):
     def __init__(self, 

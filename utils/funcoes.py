@@ -40,6 +40,7 @@ def campo_obrigatorio(
         }
         campo.bgcolor = "#FFEAEA"
         container.bgcolor = "#FFEAEA"
+        campo.hover_color="#FFEAEA"
         campo.suffix_icon = icon_red
     else:
         campo_msg.visible = False
@@ -53,6 +54,7 @@ def campo_obrigatorio(
             "letter_spacing": 0, 
             "size": 20
         }
+        campo.hover_color="#E7F9FD"
         if campo == senha_login:
             campo.text_style = {
                 "color": "#006A71", 
@@ -69,13 +71,11 @@ def campo_obrigatorio(
             }
     page.update()
 
-def autenticar(page: ft.Page, email: ft.TextField, senha: ft.TextField, menu: MenuNavegacao):
+def autenticar(page: ft.Page, email: ft.TextField, senha: ft.TextField, menu: MenuNavegacao, mensagem: ft.Text):
     from telas.trilhas import mostrar_trilhas
 
     estado.usuario_logado = UserManager.login(email.value, senha.value)
-    if estado.usuario_logado is None:
-        mensagem.value = ""
-    elif estado.usuario_logado:
+    if estado.usuario_logado:
         mensagem.visible = True
         mensagem.value = "Login efetuado com sucesso!"
         mensagem.color = "#006A71"
@@ -87,8 +87,7 @@ def autenticar(page: ft.Page, email: ft.TextField, senha: ft.TextField, menu: Me
         page.update()
 
 def recuperar_senha(page: ft.Page):
-    from telas.recuperar_senha import mostrar_recuperar_senha
-    mostrar_recuperar_senha(page)
+    return
 
 def validar_nome(page: ft.Page, nome: ft.TextField, container_nome: ft.Container, 
     nome_msg: ft.Text, icon_name: ft.Image, icon_red_name: ft.Image):
@@ -105,6 +104,7 @@ def validar_nome(page: ft.Page, nome: ft.TextField, container_nome: ft.Container
         nome.suffix_icon = icon_red_name
         nome_msg.value = "Campo obrigatório"
         nome_msg.visible = True
+        nome.hover_color="#FFEAEA"
     elif not UserManager.nome_valido(nome.value):
         nome.text_style={"color": "#F44336", "font_family": "InstrumentSans Medium", "size": 20}
         nome.hint_style = {
@@ -118,6 +118,7 @@ def validar_nome(page: ft.Page, nome: ft.TextField, container_nome: ft.Container
         nome.suffix_icon = icon_red_name
         nome_msg.value = "Nome inválido"
         nome_msg.visible = True
+        nome.hover_color="#FFEAEA"
     else:
         nome.hint_style = {
             "color": "#006A71", 
@@ -131,6 +132,7 @@ def validar_nome(page: ft.Page, nome: ft.TextField, container_nome: ft.Container
         nome.suffix_icon = icon_name
         nome_msg.value = ""
         nome_msg.visible = False
+        nome.hover_color="#E7F9FD"
     page.update()
 
 def validar_email(page: ft.Page, email: ft.TextField, container_email: ft.Container, email_msg: ft.Text,  icon_mail: ft.Image, icon_red_mail: ft.Image):
@@ -143,6 +145,7 @@ def validar_email(page: ft.Page, email: ft.TextField, container_email: ft.Contai
             "size": 20
         }
         email.suffix_icon = icon_red_mail
+        email.hover_color="#FFEAEA"
         email.bgcolor = "#FFEAEA"
         container_email.bgcolor = "#FFEAEA"
         email_msg.value = "Campo obrigatório"
@@ -160,6 +163,7 @@ def validar_email(page: ft.Page, email: ft.TextField, container_email: ft.Contai
         container_email.bgcolor = "#FFEAEA"
         email_msg.value = "Formato de email inválido"
         email_msg.visible = True
+        email.hover_color="#FFEAEA"
     else:
         email.hint_style = {
             "color": "#006A71", 
@@ -173,10 +177,12 @@ def validar_email(page: ft.Page, email: ft.TextField, container_email: ft.Contai
         container_email.bgcolor = "#E7F9FD"
         email_msg.value = ""
         email_msg.visible = False
+        email.hover_color="#E7F9FD"
     page.update()
 
-def validar_senha(page: ft.Page, senha: ft.TextField, container_senha: ft.Container, senha_msg: ft.Text, 
-icon_eyeoff_senha: ft.Image, icon_eyeon_senha: ft.Image, icon_red_eyeoff_senha: ft.Image, icon_red_eyeon_senha: ft.Image):
+def validar_senha(
+    page: ft.Page, senha: ft.TextField, container_senha: ft.Container, senha_msg: ft.Text, 
+    icon_eyeoff_senha: ft.Image, icon_eyeon_senha: ft.Image, icon_red_eyeoff_senha: ft.Image, icon_red_eyeon_senha: ft.Image):
     if senha.value == "":
         container_senha.bgcolor = "#FFEDED"
         senha.text_style={"color": "#F44336", "font_family": "InstrumentSans Medium", "letter_spacing": 0, "size": 20}
@@ -190,6 +196,7 @@ icon_eyeoff_senha: ft.Image, icon_eyeon_senha: ft.Image, icon_red_eyeoff_senha: 
         senha.bgcolor = "#FFEDED"
         senha_msg.value = "Campo obrigatório"
         senha_msg.visible = True
+        senha.hover_color="#FFEDED"
     elif not UserManager.senha_valida(senha.value):
         senha.hint_style = {
             "color": "#FF9898", 
@@ -203,6 +210,7 @@ icon_eyeoff_senha: ft.Image, icon_eyeon_senha: ft.Image, icon_red_eyeoff_senha: 
         senha.bgcolor = "#FFEDED"
         senha_msg.value = "A senha deve ter no mínimo 6 caracteres"
         senha_msg.visible = True
+        senha.hover_color="#FFEDED"
     else:
         senha.hint_style = {
             "color": "#006A71", 
@@ -216,6 +224,7 @@ icon_eyeoff_senha: ft.Image, icon_eyeon_senha: ft.Image, icon_red_eyeoff_senha: 
         senha.bgcolor = "#E7F9FD"
         senha_msg.value = ""
         senha_msg.visible = False
+        senha.hover_color="#E7F9FD"
     page.update()
 
 def validar_confirmacao_senha(page: ft.Page, senha: ft.TextField, confirmacao_senha: ft.TextField, container_confirmacao_senha: ft.Container, confirmacao_senha_msg: ft.Text):
@@ -232,6 +241,7 @@ def validar_confirmacao_senha(page: ft.Page, senha: ft.TextField, confirmacao_se
         confirmacao_senha.suffix_icon = icon_red_eyeoff_confirma_senha
         confirmacao_senha_msg.value = "Campo obrigatório"
         confirmacao_senha_msg.visible = True
+        confirmacao_senha.hover_color="#FFEDED"
     elif senha.value != confirmacao_senha.value:
         confirmacao_senha.hint_style = {
             "color": "#FF9898", 
@@ -245,6 +255,7 @@ def validar_confirmacao_senha(page: ft.Page, senha: ft.TextField, confirmacao_se
         confirmacao_senha.suffix_icon = icon_red_eyeoff_confirma_senha
         confirmacao_senha_msg.value = "As senhas devem ser iguais"
         confirmacao_senha_msg.visible = True
+        confirmacao_senha.hover_color="#FFEDED"
     else:
         confirmacao_senha.hint_style = {
             "color": "#006A71", 
@@ -258,6 +269,7 @@ def validar_confirmacao_senha(page: ft.Page, senha: ft.TextField, confirmacao_se
         confirmacao_senha.suffix_icon = icon_eyeoff_confirma_senha
         confirmacao_senha_msg.value = ""
         confirmacao_senha_msg.visible = False
+        confirmacao_senha.hover_color="#E7F9FD"
     page.update()
 
 def validar_senha_atual(page: ft.Page, senha: ft.TextField, container_senha: ft.Container,senha_msg: ft.Text, 
