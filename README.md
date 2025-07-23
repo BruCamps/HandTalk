@@ -12,15 +12,22 @@
 ° Menu Interagível <br>
 ° Quiz de Verificação de Conteúdo <br>
 ° Sistema de pontuação (XP) <br>
+° Gráfico de Desempenho do Usuário <br>
+° Banco de dados pelo sqlite3 <br>
 
 <h3>Tecnologias Utilizadas</h3>
 
 **Python 3**<br>
 
-**bibliotecas**: <br>
-- ``os`` para limpar o terminal <br>
+**bibliotecas principais**: <br>
+- ``os`` para puxar os dados do arquivo cadastro.env <br>
 - ``re``para verificar os campos <br>
 - ``random``para gerar código de verificação de e-mail <br>
+- ``flet`` para interface gráfica <br>
+- ``sqlite3`` para o banco de dados <br>
+- ``email.mime`` para construir o corpo do e-mail que será enviado para o usuário <br>
+- ``smtplib`` para enviar o e-mail ao usuário <br>
+- ``datetime`` registar o dia que o usuário fez o quiz
 
 💾 Como Executar o Projeto 
 ---
@@ -28,7 +35,7 @@
 2. Salve o projeto em um arquivo Python (ex.: ``handtalk.py``)
 3. execute o programa no terminal ou prompt de comando
 
-Estrutura do Projeto
+Estrutura Principal do Projeto
 ---
 ```
 defs.py   #Arquivo contendo as funções do código.
@@ -49,9 +56,14 @@ main.py   #Arquivo contendo o ponto de entrada do programa (menu).
 
 Melhorias Futuras:
 ---
-- Video de suporte para conteúdo
-- Adição do bando de dados
-- Feedback visual 
+Melhorar visualmente a tela de Ranking 
+Adicionar tela de recuperação da senha
+Implementar a lógica para armazenar as conquistas de cada usuário do banco de dados
+Adicionar os vídeos de suporte para o quiz 
+Usar o FireBase para armazenar os dados
+Dividir e organizar o código
+
+
 
 
 
