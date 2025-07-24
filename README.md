@@ -53,8 +53,9 @@ main.py   #Arquivo contendo o ponto de entrada do programa (menu).
 
 - Interface Gráfica do Usuário (GUI):
 
-![interface handtalk](SplashScreen.png)
-![Home](https://github.com/user-attachments/assets/589141b9-dd81-4ff2-b8a0-43e193831372)
+  ![WhatsApp Image 2025-07-23 at 21 50 58](https://github.com/user-attachments/assets/95e6286c-8b03-4bc2-a82a-6b95c48a1784)
+![WhatsApp Image 2025-07-23 at 21 50 59](https://github.com/user-attachments/assets/c325b7f5-4d06-4e0c-82a0-61eddfd96e42)
+
 
 Melhorias Futuras:
 ---
