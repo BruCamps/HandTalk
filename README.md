@@ -59,12 +59,12 @@ main.py   #Arquivo contendo o ponto de entrada do programa (menu).
 
 Melhorias Futuras:
 ---
-Melhorar visualmente a tela de Ranking 
-Adicionar tela de recuperação da senha
-Implementar a lógica para armazenar as conquistas de cada usuário do banco de dados
-Adicionar os vídeos de suporte para o quiz 
-Usar o FireBase para armazenar os dados
-Dividir e organizar o código
+Melhorar visualmente a tela de Ranking <br>
+Adicionar tela de recuperação da senha <br>
+Implementar a lógica para armazenar as conquistas de cada usuário do banco de dados <br>
+Adicionar os vídeos de suporte para o quiz <br>
+Usar o FireBase para armazenar os dados <br>
+Dividir e organizar o código <br>
 
 
 
