@@ -14,6 +14,7 @@
 ° Sistema de pontuação (XP) <br>
 ° Gráfico de Desempenho do Usuário <br>
 ° Banco de dados pelo sqlite3 <br>
+° Interface Gráfica
 
 <h3>Tecnologias Utilizadas</h3>
 
